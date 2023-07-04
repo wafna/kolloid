@@ -24,9 +24,8 @@ open class PGContainer(
     private lateinit var dataSource: HikariDataSource
     lateinit var db: AppDB
 
-    private fun damnTheTorpedoes(f: () -> Unit) = Either.catch {
-        f()
-    }.onLeft {
+    // Log an error and press on.
+    private fun damnTheTorpedoes(f: () -> Unit) = Either.catch(f).onLeft {
         log.error(it) { "Error in Postgres container." }
     }
 
