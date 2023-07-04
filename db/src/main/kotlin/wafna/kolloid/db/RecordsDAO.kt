@@ -19,25 +19,16 @@ context (Database)
 internal fun createRecordsDAO(): RecordsDAO = object : RecordsDAO {
     private val selector = from(Records).select()
 
-    override fun create(record: Record) {
-        insert(Records) {
-            set(it.id, record.id)
-            set(it.data, record.data)
-        }
+    override fun create(record: Record): Boolean = 1 == insert(Records) {
+        set(it.id, record.id)
+        set(it.data, record.data)
     }
 
     override fun fetchAll(): List<Record> = selector.marshal()
 
-    override fun byId(id: UUID): Record? {
+    override fun byId(id: UUID): Record? =
         selector.where { Records.id eq id }
-            .marshal().let { records ->
-                return when (records.size) {
-                    0 -> null
-                    1 -> records[0]
-                    else -> throw IllegalStateException("Multiple records with id $id")
-                }
-            }
-    }
+            .marshal().unique()
 
     override fun update(record: Record): Boolean = 1 == update(Records) {
         set(it.data, record.data)

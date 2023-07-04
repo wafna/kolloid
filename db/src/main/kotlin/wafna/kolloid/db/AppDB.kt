@@ -8,8 +8,6 @@ import org.flywaydb.core.Flyway
 import org.ktorm.database.Database
 import wafna.kolloid.Record
 
-data class DatabaseConfig(val jdbcUrl: String, val username: String, val password: String, val maximumPoolSize: Int)
-
 private fun DatabaseConfig.hikariConfig() = HikariConfig().also {
     it.jdbcUrl = jdbcUrl
     it.username = username
@@ -43,7 +41,7 @@ interface AppDB {
 }
 
 interface RecordsDAO {
-    fun create(record: Record)
+    fun create(record: Record): Boolean
     fun fetchAll(): List<Record>
     fun byId(id: UUID): Record?
     fun update(record: Record): Boolean
