@@ -25,8 +25,10 @@ open class PGContainer(
     lateinit var db: AppDB
 
     // Log an error and press on.
-    private fun damnTheTorpedoes(f: () -> Unit) = Either.catch(f).onLeft {
-        log.error(it) { "Error in Postgres container." }
+    private fun damnTheTorpedoes(vararg hazards: () -> Unit) = hazards.forEach { f ->
+        Either.catch(f).onLeft {
+            log.error(it) { "Error in Postgres container." }
+        }
     }
 
     @BeforeTest
@@ -55,7 +57,8 @@ open class PGContainer(
 
     @AfterTest
     fun afterTest() {
-        damnTheTorpedoes { dataSource.close() }
-        damnTheTorpedoes { postgres.stop() }
+        damnTheTorpedoes(
+            { dataSource.close() },
+            { postgres.stop() })
     }
 }
