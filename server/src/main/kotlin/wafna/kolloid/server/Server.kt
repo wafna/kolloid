@@ -6,8 +6,6 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.addFileSource
-import com.zaxxer.hikari.HikariConfig
-import com.zaxxer.hikari.HikariDataSource
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.gson.gson
 import io.ktor.server.application.Application
@@ -29,28 +27,20 @@ import io.ktor.server.routing.RouteSelectorEvaluation
 import io.ktor.server.routing.RoutingResolveContext
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
-import kotlinx.coroutines.runBlocking
-import wafna.kolloid.RecordWIP
-import wafna.kolloid.db.AppDB
-import wafna.kolloid.db.createAppDB
-import wafna.kolloid.util.LazyLogger
 import java.io.File
 import java.lang.reflect.Type
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.UUID
-import wafna.kolloid.db.initDB
+import kotlinx.coroutines.runBlocking
+import wafna.kolloid.RecordWIP
+import wafna.kolloid.db.AppDB
+import wafna.kolloid.db.withAppDB
+import wafna.kolloid.util.LazyLogger
 
 private object Server
 
 private val log = LazyLogger(Server::class)
-
-fun DatabaseConfig.hikariConfig() = HikariConfig().also {
-    it.jdbcUrl = jdbcUrl
-    it.username = username
-    it.password = password
-    it.maximumPoolSize = maximumPoolSize
-}
 
 data class ServerContext(val db: AppDB)
 
@@ -79,9 +69,8 @@ fun main(args: Array<String>): Unit = runBlocking {
     }
 
     val dbConfig = appConfig.database
-    initDB(dbConfig.jdbcUrl, dbConfig.username, dbConfig.password)
-    HikariDataSource(dbConfig.hikariConfig()).use { dataSource ->
-        val appDB = createAppDB(dataSource)
+
+    withAppDB(dbConfig) { appDB ->
         // Populate the database with some demo data for the UI.
         with(appDB.records) {
             create(RecordWIP("Huey").commit())

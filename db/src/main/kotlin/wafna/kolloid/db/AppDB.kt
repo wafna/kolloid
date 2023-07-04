@@ -1,25 +1,40 @@
 package wafna.kolloid.db
 
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
+import java.util.UUID
+import javax.sql.DataSource
 import org.flywaydb.core.Flyway
 import org.ktorm.database.Database
 import wafna.kolloid.Record
-import java.util.UUID
-import javax.sql.DataSource
 
-fun initDB(url: String, username: String, password: String) {
+data class DatabaseConfig(val jdbcUrl: String, val username: String, val password: String, val maximumPoolSize: Int)
+
+private fun DatabaseConfig.hikariConfig() = HikariConfig().also {
+    it.jdbcUrl = jdbcUrl
+    it.username = username
+    it.password = password
+    it.maximumPoolSize = maximumPoolSize
+}
+
+// Exposed for testing.
+fun createAppDB(dataSource: DataSource): AppDB =
+    with(Database.connect(dataSource)) {
+        object : AppDB {
+            override val records: RecordsDAO = createRecordsDAO()
+        }
+    }
+
+fun withAppDB(config: DatabaseConfig, borrow: (AppDB) -> Unit) {
     Flyway
         .configure()
-        .dataSource(url, username, password)
+        .dataSource(config.jdbcUrl, config.username, config.password)
         .locations("flyway")
         .load()
         .migrate()
-}
 
-fun createAppDB(dataSource: DataSource): AppDB {
-    with(Database.connect(dataSource)) {
-        return object : AppDB {
-            override val records: RecordsDAO = createRecordsDAO()
-        }
+    HikariDataSource(config.hikariConfig()).use { dataSource ->
+        borrow(createAppDB(dataSource))
     }
 }
 
