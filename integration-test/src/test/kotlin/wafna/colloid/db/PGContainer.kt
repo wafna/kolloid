@@ -47,7 +47,7 @@ open class PGContainer(
             log.info { "Creating App DB" }
             db = createAppDB(dataSource)
         }.onLeft {
-            // No need to pass on the error; the test fx will note it.
+            // No need to log the error; the test fx will note it.
             log.error { "Failed to initialize test Postgres container." }
             throw it
         }
