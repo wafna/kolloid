@@ -3,8 +3,8 @@ env: dev
 
 database:
   jdbcUrl: "jdbc:postgresql://localhost:5432/kolloid?loggerLevel=OFF"
-  username: "test"
-  password: "test"
+  username: "kolloid_user"
+  password: "tiger"
   maximumPoolSize: 1
 
 server:

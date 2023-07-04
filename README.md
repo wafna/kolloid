@@ -4,7 +4,8 @@
 * Browser using React in Kotlin/JS.
 * Client in Ktor.
 * REST API
-* H2 database with Flyway.
+* Postgres database with Flyway.
+* Ktorm for database access.
 
 Some run configurations for IDEA are included in `.run`.
 One starts the server, another runs the browser client in continuous update mode.

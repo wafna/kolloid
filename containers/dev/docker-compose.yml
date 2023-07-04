@@ -13,8 +13,9 @@ services:
       POSTGRES_USER: kolloid_user
       POSTGRES_PASSWORD: tiger
       POSTGRES_PORT: 5432
-    volumes:
-      - ../../db/src/main/resources/flyway/:/docker-entrypoint-initdb.d/
+# This will initialize the database but conflict with flyway in the server.
+#    volumes:
+#      - ../../db/src/main/resources/flyway/:/docker-entrypoint-initdb.d/
 
 networks:
   default:
