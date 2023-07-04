@@ -50,7 +50,7 @@ dev.psql: FORCE
 	@psql -h localhost -p 5432 -d kolloid -U kolloid_user
 
 db.psql: FORCE
-	@docker exec -it ${DATABASE} psql -U kolloid_user
+	@docker exec -it ${DATABASE} psql -d kolloid -U kolloid_user
 
 db.logs: FORCE
 	@docker logs -f ${DATABASE}
