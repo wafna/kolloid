@@ -1,4 +1,4 @@
-package wafna.kjs.db
+package wafna.kolloid.util
 
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test

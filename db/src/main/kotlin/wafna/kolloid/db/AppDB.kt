@@ -1,6 +1,6 @@
-package wafna.kjs.db
+package wafna.kolloid.db
 
-import wafna.kjs.Record
+import wafna.kolloid.Record
 import java.util.UUID
 import javax.sql.DataSource
 import org.flywaydb.core.Flyway

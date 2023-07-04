@@ -1,4 +1,4 @@
-package wafna.kjs.server
+package wafna.kolloid.server
 
 data class DatabaseConfig(val jdbcUrl: String, val username: String, val password: String, val maximumPoolSize: Int)
 data class ServerConfig(val host: String, val port: Int, val static: String)

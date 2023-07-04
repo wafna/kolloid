@@ -1,4 +1,4 @@
-package wafna.kjs.server
+package wafna.kolloid.server
 
 import arrow.core.Either
 import arrow.core.raise.either
@@ -16,10 +16,10 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import java.util.UUID
-import wafna.kjs.Mangled
-import wafna.kjs.Record
-import wafna.kjs.RecordWIP
-import wafna.kjs.util.LazyLogger
+import wafna.kolloid.Mangled
+import wafna.kolloid.Record
+import wafna.kolloid.RecordWIP
+import wafna.kolloid.util.LazyLogger
 
 fun ApplicationCall.ok() = response.status(HttpStatusCode.OK)
 fun ApplicationCall.internalServerError() = response.status(HttpStatusCode.InternalServerError)

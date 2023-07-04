@@ -1,4 +1,4 @@
-rootProject.name = "kjs"
+rootProject.name = "kolloid"
 
 pluginManagement {
     val kotlinVersion: String by settings

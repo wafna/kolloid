@@ -1,4 +1,4 @@
-package wafna.kjs.client
+package wafna.kolloid.client
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -17,8 +17,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import wafna.kjs.Record
-import wafna.kjs.RecordWIP
+import wafna.kolloid.Record
+import wafna.kolloid.RecordWIP
 import java.util.UUID
 
 private fun HeadersBuilder.acceptJson() =

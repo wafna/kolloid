@@ -19,5 +19,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("wafna.kjs.client.ClientKt")
+    mainClass.set("wafna.kolloid.client.ClientKt")
 }

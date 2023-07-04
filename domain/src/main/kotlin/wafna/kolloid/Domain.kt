@@ -1,6 +1,6 @@
 @file:Suppress("ConstructorParameterNaming", "ClassNaming")
 
-package wafna.kjs
+package wafna.kolloid
 
 import java.util.UUID
 

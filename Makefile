@@ -20,7 +20,7 @@ yarn: FORCE
 
 # Docker commands.
 
-APP_NAME := kjs
+APP_NAME := kolloid
 SERVER := ${APP_NAME}_server_1
 DATABASE := ${APP_NAME}_database_1
 NETWORK_NAME := ${APP_NAME}_default

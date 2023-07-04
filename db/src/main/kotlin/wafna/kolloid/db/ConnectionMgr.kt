@@ -1,4 +1,4 @@
-package wafna.kjs.db
+package wafna.kolloid.db
 
 import java.sql.Connection
 

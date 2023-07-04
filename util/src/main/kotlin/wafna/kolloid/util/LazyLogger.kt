@@ -1,4 +1,4 @@
-package wafna.kjs.util
+package wafna.kolloid.util
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

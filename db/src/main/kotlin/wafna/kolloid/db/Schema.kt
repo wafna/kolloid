@@ -1,11 +1,11 @@
-package wafna.kjs.db
+package wafna.kolloid.db
 
 import java.util.UUID
 import org.ktorm.entity.Entity
 import org.ktorm.schema.Table
 import org.ktorm.schema.uuid
 import org.ktorm.schema.varchar
-import wafna.kjs.Record
+import wafna.kolloid.Record
 
 interface RecordEntity : Entity<RecordEntity> {
     companion object : Entity.Factory<RecordEntity>()

@@ -1,4 +1,4 @@
-package wafna.kjs.server
+package wafna.kolloid.server
 
 import arrow.core.Either
 import com.google.gson.JsonDeserializationContext
@@ -35,10 +35,10 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.UUID
 import kotlinx.coroutines.runBlocking
-import wafna.kjs.RecordWIP
-import wafna.kjs.db.AppDB
-import wafna.kjs.db.createAppDB
-import wafna.kjs.util.LazyLogger
+import wafna.kolloid.RecordWIP
+import wafna.kolloid.db.AppDB
+import wafna.kolloid.db.createAppDB
+import wafna.kolloid.util.LazyLogger
 
 private object Server
 

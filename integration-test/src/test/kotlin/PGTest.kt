@@ -1,9 +1,8 @@
-package wafna.kjs.db
+package wafna.kolloid.db
 
-import java.util.UUID
 import org.testng.Assert
 import org.testng.annotations.Test
-import wafna.kjs.RecordWIP
+import wafna.kolloid.RecordWIP
 
 private infix fun Int.shouldEqual(i: Int) {
     Assert.assertEquals(this, i)

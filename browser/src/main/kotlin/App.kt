@@ -92,7 +92,7 @@ val App = FC<Props> {
                     h.a {
                         className = ClassName("navbar-brand")
                         href = HomeRoute.defaultHash().href
-                        +"KJS"
+                        +"Kolloid"
                     }
                     NavItem {
                         name = "API Demo"

@@ -6,7 +6,7 @@ services:
     ports:
       - ${POSTGRES_PORT:-5432}:5432
     environment:
-      - POSTGRES_DB=kjs
+      - POSTGRES_DB=kolloid
       - POSTGRES_USER=demo
       - POSTGRES_PASSWORD=demo
   server:
@@ -14,10 +14,10 @@ services:
       # This is read by the script that starts the app.
       - JAVA_OPTS=-Dlogback.configurationFile=../configs/logback.xml
       # This is read by the app.
-      - KJS_CONFIG_PATH=../configs/demo/app.yml
+      - KOLLOID_CONFIG_PATH=../configs/demo/app.yml
       # These are read when the credentials in the application config (above) are loaded.
-      - KJS_DB_USERNAME=demo
-      - KJS_DB_PASSWORD=demo
+      - KOLLOID_DB_USERNAME=demo
+      - KOLLOID_DB_PASSWORD=demo
     build: ../../server
     ports:
       - "8080:8080"

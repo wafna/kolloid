@@ -1,4 +1,4 @@
-package wafna.kjs.db
+package wafna.kolloid.db
 
 import java.util.UUID
 import org.ktorm.database.Database
@@ -10,7 +10,7 @@ import org.ktorm.dsl.map
 import org.ktorm.dsl.select
 import org.ktorm.dsl.update
 import org.ktorm.dsl.where
-import wafna.kjs.Record
+import wafna.kolloid.Record
 
 context (Database)
 internal fun createRecordsDAO(): RecordsDAO = object : RecordsDAO {

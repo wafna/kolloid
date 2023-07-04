@@ -1,4 +1,4 @@
-package wafna.kjs.db
+package wafna.kolloid.db
 
 import arrow.core.Either
 import com.zaxxer.hikari.HikariConfig
