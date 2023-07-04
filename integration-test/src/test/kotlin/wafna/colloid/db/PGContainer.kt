@@ -25,7 +25,7 @@ open class PGContainer(
     lateinit var db: AppDB
 
     // Log an error and press on.
-    private fun damnTheTorpedoes(vararg hazards: () -> Unit) = hazards.forEach { f ->
+    private fun damnTheTorpedoes(vararg torpedoes: () -> Unit) = torpedoes.forEach { f ->
         Either.catch(f).onLeft {
             log.error(it) { "Error in Postgres container." }
         }
