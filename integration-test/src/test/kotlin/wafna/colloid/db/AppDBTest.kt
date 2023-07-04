@@ -16,11 +16,11 @@ private infix fun Any.shouldEqual(i: Any) {
 class AppDBTest : PGContainer() {
     @Test
     fun test() {
-        val huey = RecordWIP("Huey").commit().also { db.recordsDAO.createRecord(it) }
-        val dewey = RecordWIP("Dewey").commit().also { db.recordsDAO.createRecord(it) }
-        val louie = RecordWIP("Louie").commit().also { db.recordsDAO.createRecord(it) }
+        val huey = RecordWIP("Huey").commit().also { db.recordsDAO.create(it) }
+        val dewey = RecordWIP("Dewey").commit().also { db.recordsDAO.create(it) }
+        val louie = RecordWIP("Louie").commit().also { db.recordsDAO.create(it) }
 
-        db.recordsDAO.fetchAllRecords().size shouldEqual 3
+        db.recordsDAO.fetchAll().size shouldEqual 3
         db.recordsDAO.byId(huey.id)!! shouldEqual huey
         db.recordsDAO.byId(dewey.id)!! shouldEqual dewey
         db.recordsDAO.byId(louie.id)!! shouldEqual louie

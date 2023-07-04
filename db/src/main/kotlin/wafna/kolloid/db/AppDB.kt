@@ -25,9 +25,9 @@ interface AppDB {
 }
 
 interface RecordsDAO {
-    fun createRecord(record: Record)
-    fun fetchAllRecords(): List<Record>
+    fun create(record: Record)
+    fun fetchAll(): List<Record>
     fun byId(id: UUID): Record?
-    fun updateRecord(record: Record): Boolean
-    fun deleteRecord(id: UUID): Boolean
+    fun update(record: Record): Boolean
+    fun delete(id: UUID): Boolean
 }

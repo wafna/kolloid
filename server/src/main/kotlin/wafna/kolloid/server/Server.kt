@@ -77,14 +77,13 @@ fun main(args: Array<String>): Unit = runBlocking {
         log.info { "Serving static directory: ${it.canonicalPath}" }
     }
 
-    val dbConfig = appConfig.database
-    HikariDataSource(dbConfig.hikariConfig()).use { dataSource ->
+    HikariDataSource(appConfig.database.hikariConfig()).use { dataSource ->
         val appDB = createAppDB(dataSource)
         // Populate the database with some demo data for the UI.
         with(appDB) {
-            recordsDAO.createRecord(RecordWIP("Huey").commit())
-            recordsDAO.createRecord(RecordWIP("Dewey").commit())
-            recordsDAO.createRecord(RecordWIP("Louie").commit())
+            recordsDAO.create(RecordWIP("Huey").commit())
+            recordsDAO.create(RecordWIP("Dewey").commit())
+            recordsDAO.create(RecordWIP("Louie").commit())
         }
         // Send it.
         with(ServerContext(appDB)) {

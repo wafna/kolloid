@@ -61,7 +61,7 @@ internal fun Route.api() {
     route("/record") {
         get("") {
             call.bracket {
-                db.recordsDAO.fetchAllRecords().let { records ->
+                db.recordsDAO.fetchAll().let { records ->
                     log.info { "LIST ${records.size}" }
                     respond(records)
                 }
@@ -71,7 +71,7 @@ internal fun Route.api() {
             call.bracket {
                 val id = UUID.fromString(parameters["id"])
                 log.info { "DELETE $id" }
-                if (db.recordsDAO.deleteRecord(id)) {
+                if (db.recordsDAO.delete(id)) {
                     ok()
                 } else {
                     badRequest()
@@ -81,14 +81,14 @@ internal fun Route.api() {
         put("") {
             call.bracket {
                 val record = receive<RecordWIP_1>()
-                db.recordsDAO.createRecord(record.commit())
+                db.recordsDAO.create(record.commit())
                 respond(record)
             }
         }
         post("") {
             call.bracket {
                 val record = receive<Record_1>()
-                db.recordsDAO.updateRecord(record.domain())
+                db.recordsDAO.update(record.domain())
             }
         }
     }

@@ -14,14 +14,14 @@ import java.util.UUID
 
 context (Database)
 internal fun createRecordsDAO(): RecordsDAO = object : RecordsDAO {
-    override fun createRecord(record: Record) {
+    override fun create(record: Record) {
         insert(Records) {
             set(it.id, record.id)
             set(it.data, record.data)
         }
     }
 
-    override fun fetchAllRecords(): List<Record> = from(Records).select().map { row ->
+    override fun fetchAll(): List<Record> = from(Records).select().map { row ->
         Record(row[Records.id]!!, row[Records.data]!!)
     }
 
@@ -37,12 +37,12 @@ internal fun createRecordsDAO(): RecordsDAO = object : RecordsDAO {
         }
     }
 
-    override fun updateRecord(record: Record): Boolean = 1 == update(Records) {
+    override fun update(record: Record): Boolean = 1 == update(Records) {
         set(it.data, record.data)
         where { it.id eq record.id }
     }
 
-    override fun deleteRecord(id: UUID): Boolean = 1 == delete(Records) {
+    override fun delete(id: UUID): Boolean = 1 == delete(Records) {
         it.id eq id
     }
 }
