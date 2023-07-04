@@ -18,21 +18,21 @@ private fun DatabaseConfig.hikariConfig() = HikariConfig().also {
 }
 
 // Exposed for testing.
-fun createAppDB(dataSource: DataSource): AppDB =
-    with(Database.connect(dataSource)) {
+fun createAppDB(dataSource: DataSource): AppDB {
+    Flyway
+        .configure()
+        .dataSource(dataSource)
+        .locations("flyway")
+        .load()
+        .migrate()
+    return with(Database.connect(dataSource)) {
         object : AppDB {
             override val records: RecordsDAO = createRecordsDAO()
         }
     }
+}
 
 fun withAppDB(config: DatabaseConfig, borrow: (AppDB) -> Unit) {
-    Flyway
-        .configure()
-        .dataSource(config.jdbcUrl, config.username, config.password)
-        .locations("flyway")
-        .load()
-        .migrate()
-
     HikariDataSource(config.hikariConfig()).use { dataSource ->
         borrow(createAppDB(dataSource))
     }
