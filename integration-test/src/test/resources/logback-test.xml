@@ -5,10 +5,10 @@
         </encoder>
     </appender>
 
-    <logger name="io.ktor.client.HttpClient" level="INFO" />
+    <logger name="com.zaxxer.hikari" level="WARN"/>
+    <logger name="org.flywaydb" level="INFO"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
-
 </configuration>
