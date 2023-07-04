@@ -39,6 +39,7 @@ import java.lang.reflect.Type
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.UUID
+import wafna.kolloid.db.initDB
 
 private object Server
 
@@ -77,13 +78,15 @@ fun main(args: Array<String>): Unit = runBlocking {
         log.info { "Serving static directory: ${it.canonicalPath}" }
     }
 
-    HikariDataSource(appConfig.database.hikariConfig()).use { dataSource ->
+    val dbConfig = appConfig.database
+    initDB(dbConfig.jdbcUrl, dbConfig.username, dbConfig.password)
+    HikariDataSource(dbConfig.hikariConfig()).use { dataSource ->
         val appDB = createAppDB(dataSource)
         // Populate the database with some demo data for the UI.
-        with(appDB) {
-            records.create(RecordWIP("Huey").commit())
-            records.create(RecordWIP("Dewey").commit())
-            records.create(RecordWIP("Louie").commit())
+        with(appDB.records) {
+            create(RecordWIP("Huey").commit())
+            create(RecordWIP("Dewey").commit())
+            create(RecordWIP("Louie").commit())
         }
         // Send it.
         with(ServerContext(appDB)) {

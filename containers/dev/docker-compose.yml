@@ -1,26 +1,20 @@
 version: '3.9'
 
 services:
-#  web:
-#    build: .
-#    ports:
-#      - "80:8000"
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#    command: [ "python", "app.py" ]
-
   app-db:
-    container_name: app-db-dev
+    container_name: kolloid_db_dev
     image: postgres:15-alpine
     restart: always
     ports:
       - ${POSTGRES_PORT:-5432}:5432
     environment:
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
+      POSTGRES_HOST: localhost
+      POSTGRES_DB: kolloid
+      POSTGRES_USER: kolloid_user
+      POSTGRES_PASSWORD: tiger
+      POSTGRES_PORT: 5432
     volumes:
-      - ./resources/sql/:/docker-entrypoint-initdb.d/
+      - ../../db/src/main/resources/flyway/:/docker-entrypoint-initdb.d/
 
 networks:
   default:

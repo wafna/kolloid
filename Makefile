@@ -22,8 +22,8 @@ yarn: FORCE
 
 APP_NAME := kolloid
 SERVER := ${APP_NAME}_server_1
-DATABASE := ${APP_NAME}_database_1
-NETWORK_NAME := ${APP_NAME}_default
+DATABASE := ${APP_NAME}_db_dev
+NETWORK_NAME := ${APP_NAME}_network
 
 images: FORCE
 	@docker images
@@ -37,23 +37,20 @@ prune: FORCE
 ps: FORCE
 	@docker ps
 
-rm: FORCE
-	@docker container rm -f ${DATABASE} ${SERVER}
+dev.rm: FORCE
+	@docker container rm -f ${DATABASE}
 
-up: FORCE
-	@cd deploy && docker-compose up --build --detach
+dev.start: FORCE
+	@cd containers/dev && docker-compose up --detach
 
-stop: FORCE
-	@docker stop ${DATABASE} ${SERVER}
+dev.stop: FORCE
+	@docker stop ${DATABASE} && docker rm ${DATABASE}
 
-app_sh: FORCE
-	@docker exec -it ${SERVER} /bin/bash
+dev.psql: FORCE
+	@psql -h localhost -p 5432 -d kolloid -U kolloid_user
 
-db_sh: FORCE
-	@docker exec -it ${DABASE} /bin/sh
+db.psql: FORCE
+	@docker exec -it ${DATABASE} psql -U kolloid_user
 
-app_logs: FORCE
-	@docker logs -f ${SERVER}
-
-db_logs: FORCE
+db.logs: FORCE
 	@docker logs -f ${DATABASE}

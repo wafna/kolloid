@@ -11,7 +11,6 @@ interface RecordEntity : Entity<RecordEntity> {
     companion object : Entity.Factory<RecordEntity>()
     val id: UUID
     var data: String
-    fun toDomain(): Record = Record(id, data)
 }
 
 object Records : Table<RecordEntity>("record") {

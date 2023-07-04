@@ -6,13 +6,16 @@ import wafna.kolloid.Record
 import java.util.UUID
 import javax.sql.DataSource
 
-fun createAppDB(dataSource: DataSource): AppDB {
+fun initDB(url: String, username: String, password: String) {
     Flyway
         .configure()
-        .dataSource(dataSource)
+        .dataSource(url, username, password)
         .locations("flyway")
         .load()
         .migrate()
+}
+
+fun createAppDB(dataSource: DataSource): AppDB {
     with(Database.connect(dataSource)) {
         return object : AppDB {
             override val records: RecordsDAO = createRecordsDAO()
