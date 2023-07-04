@@ -2,7 +2,7 @@
 env: dev
 
 database:
-  jdbcUrl: "jdbc:postgresql://localhost:5243/test?loggerLevel=OFF"
+  jdbcUrl: "jdbc:postgresql://localhost:5432/test?loggerLevel=OFF"
   username: "test"
   password: "test"
   maximumPoolSize: 1
