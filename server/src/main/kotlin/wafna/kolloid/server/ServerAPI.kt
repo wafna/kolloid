@@ -15,11 +15,11 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
-import java.util.UUID
 import wafna.kolloid.Mangled
 import wafna.kolloid.Record
 import wafna.kolloid.RecordWIP
 import wafna.kolloid.util.LazyLogger
+import java.util.UUID
 
 fun ApplicationCall.ok() = response.status(HttpStatusCode.OK)
 fun ApplicationCall.internalServerError() = response.status(HttpStatusCode.InternalServerError)
@@ -49,8 +49,6 @@ data class Record_1(val id_1: UUID, val data_1: String) : Mangled {
     fun domain(): Record = Record(id_1, data_1)
 }
 
-
-
 /**
  * The browser API.
  */
@@ -59,7 +57,7 @@ internal fun Route.api() {
     route("/record") {
         get("") {
             call.bracket {
-                db.recordsDAO.readRecords().let { records ->
+                db.recordsDAO.fetchAllRecords().let { records ->
                     log.info { "LIST ${records.size}" }
                     respond(records)
                 }

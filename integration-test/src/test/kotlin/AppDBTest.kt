@@ -19,7 +19,7 @@ class PGTest : PGContainer() {
         val dewey = RecordWIP("Dewey").commit().also { db.recordsDAO.createRecord(it) }
         val louie = RecordWIP("Louie").commit().also { db.recordsDAO.createRecord(it) }
 
-        db.recordsDAO.readRecords().size shouldEqual 3
+        db.recordsDAO.fetchAllRecords().size shouldEqual 3
         db.recordsDAO.byId(huey.id)!! shouldEqual huey
         db.recordsDAO.byId(dewey.id)!! shouldEqual dewey
         db.recordsDAO.byId(louie.id)!! shouldEqual louie

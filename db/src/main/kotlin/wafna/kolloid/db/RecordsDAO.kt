@@ -1,6 +1,5 @@
 package wafna.kolloid.db
 
-import java.util.UUID
 import org.ktorm.database.Database
 import org.ktorm.dsl.delete
 import org.ktorm.dsl.eq
@@ -11,6 +10,7 @@ import org.ktorm.dsl.select
 import org.ktorm.dsl.update
 import org.ktorm.dsl.where
 import wafna.kolloid.Record
+import java.util.UUID
 
 context (Database)
 internal fun createRecordsDAO(): RecordsDAO = object : RecordsDAO {
@@ -21,7 +21,7 @@ internal fun createRecordsDAO(): RecordsDAO = object : RecordsDAO {
         }
     }
 
-    override fun readRecords(): List<Record> = from(Records).select().map { row ->
+    override fun fetchAllRecords(): List<Record> = from(Records).select().map { row ->
         Record(row[Records.id]!!, row[Records.data]!!)
     }
 

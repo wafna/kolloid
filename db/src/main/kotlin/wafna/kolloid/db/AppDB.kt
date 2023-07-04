@@ -1,10 +1,10 @@
 package wafna.kolloid.db
 
+import org.flywaydb.core.Flyway
+import org.ktorm.database.Database
 import wafna.kolloid.Record
 import java.util.UUID
 import javax.sql.DataSource
-import org.flywaydb.core.Flyway
-import org.ktorm.database.Database
 
 fun createAppDB(dataSource: DataSource): AppDB {
     Flyway
@@ -26,7 +26,7 @@ interface AppDB {
 
 interface RecordsDAO {
     fun createRecord(record: Record)
-    fun readRecords(): List<Record>
+    fun fetchAllRecords(): List<Record>
     fun byId(id: UUID): Record?
     fun updateRecord(record: Record): Boolean
     fun deleteRecord(id: UUID): Boolean
