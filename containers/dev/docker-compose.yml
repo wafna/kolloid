@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+#  web:
+#    build: .
+#    ports:
+#      - "80:8000"
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    command: [ "python", "app.py" ]
+
+  app-db:
+    container_name: app-db-dev
+    image: postgres:15-alpine
+    restart: always
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    volumes:
+      - ./resources/sql/:/docker-entrypoint-initdb.d/
+
+networks:
+  default:
+    name: app_dev_network

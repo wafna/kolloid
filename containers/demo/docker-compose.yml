@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres:15-alpine
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+    environment:
+      - POSTGRES_DB=kjs
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=demo
+  server:
+    environment:
+      # This is read by the script that starts the app.
+      - JAVA_OPTS=-Dlogback.configurationFile=../configs/logback.xml
+      # This is read by the app.
+      - KJS_CONFIG_PATH=../configs/demo/app.yml
+      # These are read when the credentials in the application config (above) are loaded.
+      - KJS_DB_USERNAME=demo
+      - KJS_DB_PASSWORD=demo
+    build: ../../server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
