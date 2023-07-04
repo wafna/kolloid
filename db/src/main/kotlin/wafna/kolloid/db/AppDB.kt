@@ -2,11 +2,11 @@ package wafna.kolloid.db
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import java.util.UUID
-import javax.sql.DataSource
 import org.flywaydb.core.Flyway
 import org.ktorm.database.Database
 import wafna.kolloid.Record
+import java.util.UUID
+import javax.sql.DataSource
 
 private fun DatabaseConfig.hikariConfig() = HikariConfig().also {
     it.jdbcUrl = jdbcUrl

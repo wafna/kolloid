@@ -59,6 +59,7 @@ open class PGContainer(
     fun afterTest() {
         damnTheTorpedoes(
             { dataSource.close() },
-            { postgres.stop() })
+            { postgres.stop() },
+        )
     }
 }

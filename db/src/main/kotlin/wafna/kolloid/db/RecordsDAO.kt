@@ -1,6 +1,5 @@
 package wafna.kolloid.db
 
-import java.util.UUID
 import org.ktorm.database.Database
 import org.ktorm.dsl.Query
 import org.ktorm.dsl.delete
@@ -12,6 +11,7 @@ import org.ktorm.dsl.select
 import org.ktorm.dsl.update
 import org.ktorm.dsl.where
 import wafna.kolloid.Record
+import java.util.UUID
 
 private fun Query.marshal(): List<Record> = map { row -> Record(row[Records.id]!!, row[Records.data]!!) }
 
