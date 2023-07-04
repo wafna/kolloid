@@ -81,9 +81,9 @@ fun main(args: Array<String>): Unit = runBlocking {
         val appDB = createAppDB(dataSource)
         // Populate the database with some demo data for the UI.
         with(appDB) {
-            recordsDAO.create(RecordWIP("Huey").commit())
-            recordsDAO.create(RecordWIP("Dewey").commit())
-            recordsDAO.create(RecordWIP("Louie").commit())
+            records.create(RecordWIP("Huey").commit())
+            records.create(RecordWIP("Dewey").commit())
+            records.create(RecordWIP("Louie").commit())
         }
         // Send it.
         with(ServerContext(appDB)) {

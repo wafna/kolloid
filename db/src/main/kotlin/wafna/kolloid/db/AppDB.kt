@@ -15,13 +15,13 @@ fun createAppDB(dataSource: DataSource): AppDB {
         .migrate()
     with(Database.connect(dataSource)) {
         return object : AppDB {
-            override val recordsDAO: RecordsDAO = createRecordsDAO()
+            override val records: RecordsDAO = createRecordsDAO()
         }
     }
 }
 
 interface AppDB {
-    val recordsDAO: RecordsDAO
+    val records: RecordsDAO
 }
 
 interface RecordsDAO {
