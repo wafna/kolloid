@@ -3,6 +3,9 @@ package wafna.kolloid.db
 import org.testng.Assert
 import org.testng.annotations.Test
 import wafna.kolloid.UserWIP
+import wafna.kolloid.server.util.PasswordHash
+import wafna.kolloid.server.util.hashPassword
+import wafna.kolloid.server.util.verifyPassword
 
 private infix fun Int.shouldEqual(i: Int) {
     Assert.assertEquals(this, i)
@@ -24,6 +27,15 @@ class AppDBTest : PGContainer() {
         db.users.byId(dewey.id)!! shouldEqual dewey
         db.users.byId(louie.id)!! shouldEqual louie
 
-        db.passwords.create(Password(huey.id, "salt".toByteArray(), "hash".toByteArray()))
+        val password = "password"
+        val hashed = hashPassword(password)
+        db.passwords.create(UserPasswordHash(huey.id, hashed.salt, hashed.hash))
+        db.passwords.byUserId(huey.id)!!.also {
+            it.salt shouldEqual hashed.salt
+            it.hash shouldEqual hashed.hash
+            Assert.assertTrue(verifyPassword(password, PasswordHash(it.salt, it.hash)))
+        }
+
+        Assert.assertEquals(db.users.search("y").size, 2)
     }
 }

@@ -15,6 +15,7 @@ import wafna.kolloid.db.UsersDAO
 import wafna.kolloid.db.UsersTable
 import wafna.kolloid.db.unique
 import java.util.UUID
+import org.ktorm.dsl.like
 
 private fun Query.marshal(): List<User> = map { row ->
     User(
@@ -38,6 +39,10 @@ internal fun createUsersDAO(): UsersDAO = object : UsersDAO {
     override fun byId(id: UUID): User? =
         selector.where { UsersTable.id eq id }
             .marshal().unique()
+
+    override fun search(token: String): List<User> =
+        selector.where { UsersTable.username like "%$token%" }
+            .marshal()
 
     override fun update(user: User): Boolean =
         1 == update(UsersTable) {

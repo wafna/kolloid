@@ -12,7 +12,7 @@ import javax.sql.DataSource
 
 // Internal domain object.
 @Suppress("ArrayInDataClass")
-data class Password(val userId: UUID, val salt: ByteArray, val hash: ByteArray)
+data class UserPasswordHash(val userId: UUID, val salt: ByteArray, val hash: ByteArray)
 
 private fun DatabaseConfig.hikariConfig() = HikariConfig().also {
     it.jdbcUrl = jdbcUrl
@@ -52,13 +52,14 @@ interface UsersDAO {
     fun create(user: User): Boolean
     fun fetchAll(): List<User>
     fun byId(id: UUID): User?
+    fun search(token: String): List<User>
     fun update(user: User): Boolean
     fun delete(id: UUID): Boolean
 }
 
 interface PasswordsDAO {
-    fun create(password: Password): Boolean
-    fun update(password: Password): Boolean
-    fun byUserId(userId: UUID): Password?
+    fun create(password: UserPasswordHash): Boolean
+    fun update(password: UserPasswordHash): Boolean
+    fun byUserId(userId: UUID): UserPasswordHash?
     fun delete(userId: UUID): Boolean
 }
