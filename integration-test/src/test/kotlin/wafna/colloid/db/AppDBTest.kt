@@ -14,7 +14,7 @@ private infix fun Any.shouldEqual(i: Any) {
 }
 
 class AppDBTest : PGContainer() {
-    @Test
+    @Test(groups = ["integration"])
     fun test() {
         val huey = RecordWIP("Huey").commit().also { db.records.create(it) }
         val dewey = RecordWIP("Dewey").commit().also { db.records.create(it) }

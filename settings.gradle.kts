@@ -18,6 +18,5 @@ include(
     "server",
     "client",
     "browser",
-    "test",
     "integration-test"
 )
