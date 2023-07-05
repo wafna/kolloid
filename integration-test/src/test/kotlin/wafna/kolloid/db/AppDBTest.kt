@@ -2,7 +2,6 @@ package wafna.kolloid.db
 
 import org.testng.Assert
 import org.testng.annotations.Test
-import wafna.colloid.db.PGContainer
 import wafna.kolloid.UserWIP
 
 private infix fun Int.shouldEqual(i: Int) {
@@ -25,6 +24,6 @@ class AppDBTest : PGContainer() {
         db.users.byId(dewey.id)!! shouldEqual dewey
         db.users.byId(louie.id)!! shouldEqual louie
 
-
+        db.passwords.create(Password(huey.id, "salt".toByteArray(), "hash".toByteArray()))
     }
 }

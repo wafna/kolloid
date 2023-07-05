@@ -1,6 +1,5 @@
 package wafna.kolloid.db.dao
 
-import java.util.UUID
 import org.ktorm.database.Database
 import org.ktorm.dsl.Query
 import org.ktorm.dsl.delete
@@ -15,11 +14,12 @@ import wafna.kolloid.User
 import wafna.kolloid.db.UsersDAO
 import wafna.kolloid.db.UsersTable
 import wafna.kolloid.db.unique
+import java.util.UUID
 
 private fun Query.marshal(): List<User> = map { row ->
     User(
         row[UsersTable.id]!!,
-        row[UsersTable.username]!!
+        row[UsersTable.username]!!,
     )
 }
 

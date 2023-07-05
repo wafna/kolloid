@@ -1,6 +1,5 @@
 package wafna.kolloid.db.dao
 
-import java.util.UUID
 import org.ktorm.database.Database
 import org.ktorm.dsl.Query
 import org.ktorm.dsl.eq
@@ -10,15 +9,16 @@ import org.ktorm.dsl.map
 import org.ktorm.dsl.select
 import org.ktorm.dsl.update
 import org.ktorm.dsl.where
-import wafna.kolloid.Password
+import wafna.kolloid.db.Password
 import wafna.kolloid.db.PasswordsDAO
 import wafna.kolloid.db.PasswordsTable
+import java.util.UUID
 
 private fun Query.marshal(): List<Password> = map { row ->
     Password(
         row[PasswordsTable.userId]!!,
         row[PasswordsTable.salt]!!,
-        row[PasswordsTable.hash]!!
+        row[PasswordsTable.hash]!!,
     )
 }
 

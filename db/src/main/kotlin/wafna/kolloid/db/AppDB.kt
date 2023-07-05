@@ -5,11 +5,14 @@ import com.zaxxer.hikari.HikariDataSource
 import org.flywaydb.core.Flyway
 import org.ktorm.database.Database
 import wafna.kolloid.User
-import java.util.UUID
-import javax.sql.DataSource
-import wafna.kolloid.Password
 import wafna.kolloid.db.dao.createPasswordsDAO
 import wafna.kolloid.db.dao.createUsersDAO
+import java.util.UUID
+import javax.sql.DataSource
+
+// Internal domain object.
+@Suppress("ArrayInDataClass")
+data class Password(val userId: UUID, val salt: ByteArray, val hash: ByteArray)
 
 private fun DatabaseConfig.hikariConfig() = HikariConfig().also {
     it.jdbcUrl = jdbcUrl

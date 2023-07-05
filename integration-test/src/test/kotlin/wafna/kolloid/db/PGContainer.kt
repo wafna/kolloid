@@ -1,4 +1,4 @@
-package wafna.colloid.db
+package wafna.kolloid.db
 
 import arrow.core.Either
 import com.zaxxer.hikari.HikariConfig
@@ -8,8 +8,6 @@ import kotlinx.coroutines.runBlocking
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testng.annotations.AfterTest
 import org.testng.annotations.BeforeTest
-import wafna.kolloid.db.AppDB
-import wafna.kolloid.db.createAppDB
 import wafna.kolloid.util.LazyLogger
 
 private const val ContainerDelayStart = 3_000L
@@ -49,8 +47,7 @@ open class PGContainer(
             log.info { "Creating App DB" }
             db = createAppDB(dataSource)
         }.onLeft {
-            // No need to log the error; the test fx will note it.
-            log.error { "Failed to initialize test Postgres container." }
+            log.error(it) { "Failed to initialize test Postgres container." }
             throw it
         }
     }

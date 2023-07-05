@@ -2,8 +2,8 @@ package wafna.kolloid.db
 
 import org.ktorm.entity.Entity
 import org.ktorm.schema.Table
-import org.ktorm.schema.uuid
 import org.ktorm.schema.bytes
+import org.ktorm.schema.uuid
 import org.ktorm.schema.varchar
 import java.util.UUID
 
