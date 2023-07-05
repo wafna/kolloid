@@ -6,11 +6,11 @@ import java.util.UUID
 
 private fun newID(): UUID = UUID.randomUUID()
 
-data class Record(val id: UUID, val data: String)
+data class User(val id: UUID, val username: String)
 
 // Tagging interface for the mangling.
 interface Mangled
 
-data class RecordWIP(val data: String) : Mangled {
-    fun commit(): Record = Record(newID(), data)
+data class UserWIP(val username: String) : Mangled {
+    fun commit(): User = User(newID(), username)
 }

@@ -6,13 +6,13 @@ import org.ktorm.schema.uuid
 import org.ktorm.schema.varchar
 import java.util.UUID
 
-interface RecordEntity : Entity<RecordEntity> {
-    companion object : Entity.Factory<RecordEntity>()
+interface UserEntity : Entity<UserEntity> {
+    companion object : Entity.Factory<UserEntity>()
     val id: UUID
-    var data: String
+    var username: String
 }
 
-object Records : Table<RecordEntity>("record") {
+object UsersTable : Table<UserEntity>("users") {
     val id = uuid("id").primaryKey().bindTo { it.id }
-    val data = varchar("data").bindTo { it.data }
+    val username = varchar("username").bindTo { it.username }
 }

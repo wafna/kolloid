@@ -17,8 +17,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import wafna.kolloid.Record
-import wafna.kolloid.RecordWIP
+import wafna.kolloid.User
+import wafna.kolloid.UserWIP
 import java.util.UUID
 
 private fun HeadersBuilder.acceptJson() =
@@ -48,68 +48,68 @@ fun main() = runBlocking(Dispatchers.IO) {
 
         // Define the API.
 
-        suspend fun list(): List<Record> = client
-            .get("$baseURL/record") {
+        suspend fun list(): List<User> = client
+            .get("$baseURL/users") {
                 headers {
                     acceptJson()
                 }
             }
-            .body<List<Record>>()
+            .body<List<User>>()
             .also { records ->
                 println(
-                    """RECORDS
+                    """USERS
                       |${records.joinToString("\n") { "   $it" }}
                     """.trimMargin(),
                 )
             }
 
-        suspend fun update(record: Record) = client
-            .post("$baseURL/record") {
+        suspend fun update(record: User) = client
+            .post("$baseURL/users") {
                 headers {
                     sendJson()
                 }
                 setBody(record)
             }
 
-        suspend fun create(record: RecordWIP) = client
-            .put("$baseURL/record") {
+        suspend fun create(record: UserWIP) = client
+            .put("$baseURL/users") {
                 headers {
                     sendJson()
                     acceptJson()
                 }
                 setBody(record)
             }
-            .body<Record>()
+            .body<User>()
 
         suspend fun delete(id: UUID) = client
-            .delete("$baseURL/record?id=$id")
+            .delete("$baseURL/users?id=$id")
 
         // Do stuff...
 
         // This leaves the database in the same state as the seed data provided by the server (except for ids).
         suspend fun lawyerUp() {
-            list().forEach { record ->
-                delete(record.id)
+            list().forEach { user ->
+                delete(user.id)
             }
 
-            create(RecordWIP("Huey"))
-            create(RecordWIP("Dewey"))
-            create(RecordWIP("Louie"))
+            create(UserWIP("Huey"))
+            create(UserWIP("Dewey"))
+            create(UserWIP("Louie"))
         }
 
         // Start in a known state.
         lawyerUp()
 
-        list().also { records ->
-            require(3 == records.size)
-            update(records[0].let { it.copy(data = "UPDATED-${it.data}") })
+        list().also { users ->
+            require(3 == users.size)
+            update(users[0].let { it.copy(username = "UPDATED-${it.username}") })
         }
         list().also { records ->
             require(3 == records.size)
             delete(records[0].id)
             require(2 == list().size)
         }
-        create(RecordWIP("CREATED")).also {
+        create(UserWIP("CREATED")).also {
             println("CREATE $it")
         }
         list().also { records ->

@@ -1,8 +1,8 @@
 package pages
 
 import API
-import Record
-import RecordWIP
+import User
+import UserWIP
 import kotlinx.coroutines.launch
 import mainScope
 import react.FC
@@ -15,15 +15,15 @@ import web.cssom.ClassName
 import react.dom.html.ReactHTML as h
 
 private external interface RecordEditorProps : Props {
-    var record: Record?
-    var updateRecord: (Record) -> Unit
-    var createRecord: (RecordWIP) -> Unit
+    var record: User?
+    var updateRecord: (User) -> Unit
+    var createRecord: (UserWIP) -> Unit
 }
 
 private val RecordEditor = FC<RecordEditorProps> { props ->
 
     val record = props.record
-    var data by useState(record?.data ?: "")
+    var data by useState(record?.username ?: "")
 
     h.form {
         h.div {
@@ -47,7 +47,7 @@ private val RecordEditor = FC<RecordEditorProps> { props ->
                     className = ClassName("btn btn-primary")
                     +"Create"
                     onClick = preventDefault {
-                        props.createRecord(RecordWIP(data))
+                        props.createRecord(UserWIP(data))
                     }
                 }
             } else {
@@ -55,7 +55,7 @@ private val RecordEditor = FC<RecordEditorProps> { props ->
                     className = classNames("btn", "btn-primary")
                     +"Update"
                     onClick = preventDefault {
-                        props.updateRecord(Record(record.id, data))
+                        props.updateRecord(User(record.id, data))
                     }
                 }
             }
@@ -82,8 +82,8 @@ private val ItemCtrl = FC<ItemCtrlProps> { props ->
 
 val RecordList = FC<Props> {
 
-    var records: List<Record>? by useState(null)
-    var editedRecord: Record? by useState(null)
+    var records: List<User>? by useState(null)
+    var editedRecord: User? by useState(null)
     var createNew by useState(false)
 
     suspend fun updateList() {
@@ -154,7 +154,7 @@ val RecordList = FC<Props> {
                         }
                         h.div {
                             className = ClassName(col(5))
-                            h.span { +record.data }
+                            h.span { +record.username }
                         }
                     }
                 }

@@ -3,8 +3,7 @@ import kotlinx.serialization.Serializable
 typealias UUID = String
 
 @Serializable
-data class Record(val id: UUID, val data: String)
+data class User(val id: UUID, val username: String)
 
 @Serializable
-data class RecordWIP(val data: String)
-
+data class UserWIP(val username: String)

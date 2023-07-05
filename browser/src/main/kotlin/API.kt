@@ -1,6 +1,5 @@
 import kotlinx.browser.window
 import kotlinx.coroutines.await
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.w3c.fetch.RequestInit
 import org.w3c.fetch.Response
@@ -72,15 +71,15 @@ object API {
     }
 
     // Get all the records.
-    suspend fun listRecords(): List<Record> =
-        json(get(makeURL("record")))
+    suspend fun listRecords(): List<User> =
+        json(get(makeURL("users")))
 
     suspend fun deleteRecord(id: UUID) =
-        delete(makeURL("record", "id" to id))
+        delete(makeURL("users", "id" to id))
 
-    suspend fun updateRecord(record: Record) =
-        post(makeURL("record"), record)
+    suspend fun updateRecord(record: User) =
+        post(makeURL("users"), record)
 
-    suspend fun createRecord(record: RecordWIP) =
-        put(makeURL("record"), record)
+    suspend fun createRecord(record: UserWIP) =
+        put(makeURL("users"), record)
 }

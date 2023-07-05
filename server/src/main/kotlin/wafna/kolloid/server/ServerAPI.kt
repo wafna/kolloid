@@ -16,8 +16,8 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import wafna.kolloid.Mangled
-import wafna.kolloid.Record
-import wafna.kolloid.RecordWIP
+import wafna.kolloid.User
+import wafna.kolloid.UserWIP
 import wafna.kolloid.util.LazyLogger
 import java.util.UUID
 
@@ -46,11 +46,11 @@ suspend fun ApplicationCall.bracket(
 
 // Hack to (temporarily) work around the mangling Kotlin does to the names of the fields in the browser.
 data class Record_1(val id_1: UUID, val data_1: String) : Mangled {
-    fun domain(): Record = Record(id_1, data_1)
+    fun domain(): User = User(id_1, data_1)
 }
 
 data class RecordWIP_1(val data_1: String) : Mangled {
-    fun commit(): Record = RecordWIP(data_1).commit()
+    fun commit(): User = UserWIP(data_1).commit()
 }
 
 /**

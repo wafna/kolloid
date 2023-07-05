@@ -28,7 +28,7 @@ import io.ktor.server.routing.RoutingResolveContext
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import kotlinx.coroutines.runBlocking
-import wafna.kolloid.RecordWIP
+import wafna.kolloid.UserWIP
 import wafna.kolloid.db.AppDB
 import wafna.kolloid.db.withAppDB
 import wafna.kolloid.util.LazyLogger
@@ -73,9 +73,9 @@ fun main(args: Array<String>): Unit = runBlocking {
     withAppDB(dbConfig) { appDB ->
         // Populate the database with some demo data for the UI.
         with(appDB.records) {
-            create(RecordWIP("Huey").commit())
-            create(RecordWIP("Dewey").commit())
-            create(RecordWIP("Louie").commit())
+            create(UserWIP("Huey").commit())
+            create(UserWIP("Dewey").commit())
+            create(UserWIP("Louie").commit())
         }
         // Send it.
         with(ServerContext(appDB)) {

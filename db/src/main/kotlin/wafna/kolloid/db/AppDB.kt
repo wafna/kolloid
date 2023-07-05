@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.flywaydb.core.Flyway
 import org.ktorm.database.Database
-import wafna.kolloid.Record
+import wafna.kolloid.User
 import java.util.UUID
 import javax.sql.DataSource
 
@@ -25,7 +25,7 @@ fun createAppDB(dataSource: DataSource): AppDB {
         .migrate()
     return with(Database.connect(dataSource)) {
         object : AppDB {
-            override val records: RecordsDAO = createRecordsDAO()
+            override val records: UsersDAO = createUsersDAO()
         }
     }
 }
@@ -37,13 +37,13 @@ fun withAppDB(config: DatabaseConfig, borrow: (AppDB) -> Unit) {
 }
 
 interface AppDB {
-    val records: RecordsDAO
+    val records: UsersDAO
 }
 
-interface RecordsDAO {
-    fun create(record: Record): Boolean
-    fun fetchAll(): List<Record>
-    fun byId(id: UUID): Record?
-    fun update(record: Record): Boolean
+interface UsersDAO {
+    fun create(user: User): Boolean
+    fun fetchAll(): List<User>
+    fun byId(id: UUID): User?
+    fun update(user: User): Boolean
     fun delete(id: UUID): Boolean
 }
