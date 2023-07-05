@@ -29,7 +29,7 @@ fun createAppDB(dataSource: DataSource): AppDB {
     return with(Database.connect(dataSource)) {
         object : AppDB {
             override val users: UsersDAO = createUsersDAO()
-            override val passwords: PasswordsDAO = createPasswords  DAO()
+            override val passwords: PasswordsDAO = createPasswordsDAO()
         }
     }
 }
