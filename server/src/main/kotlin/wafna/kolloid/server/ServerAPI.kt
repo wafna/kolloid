@@ -15,7 +15,6 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
-import wafna.kolloid.Mangled
 import wafna.kolloid.User
 import wafna.kolloid.UserWIP
 import wafna.kolloid.util.LazyLogger
@@ -44,12 +43,15 @@ suspend fun ApplicationCall.bracket(
         internalServerError()
     }
 
-// Hack to (temporarily) work around the mangling Kotlin does to the names of the fields in the browser.
-data class Record_1(val id_1: UUID, val data_1: String) : Mangled {
+// Hacks to (temporarily?) work around the mangling Kotlin does to the names of the fields in the browser.
+
+@Suppress("ClassName", "PropertyName")
+data class Record_1(val id_1: UUID, val data_1: String) {
     fun domain(): User = User(id_1, data_1)
 }
 
-data class RecordWIP_1(val data_1: String) : Mangled {
+@Suppress("ClassName", "PropertyName")
+data class RecordWIP_1(val data_1: String) {
     fun commit(): User = UserWIP(data_1).commit()
 }
 
@@ -61,7 +63,7 @@ internal fun Route.api() {
     route("/record") {
         get("") {
             call.bracket {
-                db.records.fetchAll().let { records ->
+                db.users.fetchAll().let { records ->
                     log.info { "LIST ${records.size}" }
                     respond(records)
                 }
@@ -71,7 +73,7 @@ internal fun Route.api() {
             call.bracket {
                 val id = UUID.fromString(parameters["id"])
                 log.info { "DELETE $id" }
-                if (db.records.delete(id)) {
+                if (db.users.delete(id)) {
                     ok()
                 } else {
                     badRequest()
@@ -81,14 +83,14 @@ internal fun Route.api() {
         put("") {
             call.bracket {
                 val record = receive<RecordWIP_1>()
-                db.records.create(record.commit())
+                db.users.create(record.commit())
                 respond(record)
             }
         }
         post("") {
             call.bracket {
                 val record = receive<Record_1>()
-                db.records.update(record.domain())
+                db.users.update(record.domain())
             }
         }
     }

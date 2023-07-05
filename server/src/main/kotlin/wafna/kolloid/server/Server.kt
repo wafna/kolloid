@@ -72,7 +72,7 @@ fun main(args: Array<String>): Unit = runBlocking {
 
     withAppDB(dbConfig) { appDB ->
         // Populate the database with some demo data for the UI.
-        with(appDB.records) {
+        with(appDB.users) {
             create(UserWIP("Huey").commit())
             create(UserWIP("Dewey").commit())
             create(UserWIP("Louie").commit())

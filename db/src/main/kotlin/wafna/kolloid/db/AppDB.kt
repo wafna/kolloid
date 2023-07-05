@@ -7,6 +7,9 @@ import org.ktorm.database.Database
 import wafna.kolloid.User
 import java.util.UUID
 import javax.sql.DataSource
+import wafna.kolloid.Password
+import wafna.kolloid.db.dao.createPasswordsDAO
+import wafna.kolloid.db.dao.createUsersDAO
 
 private fun DatabaseConfig.hikariConfig() = HikariConfig().also {
     it.jdbcUrl = jdbcUrl
@@ -25,7 +28,8 @@ fun createAppDB(dataSource: DataSource): AppDB {
         .migrate()
     return with(Database.connect(dataSource)) {
         object : AppDB {
-            override val records: UsersDAO = createUsersDAO()
+            override val users: UsersDAO = createUsersDAO()
+            override val passwords: PasswordsDAO = createPasswords  DAO()
         }
     }
 }
@@ -37,7 +41,8 @@ fun withAppDB(config: DatabaseConfig, borrow: (AppDB) -> Unit) {
 }
 
 interface AppDB {
-    val records: UsersDAO
+    val users: UsersDAO
+    val passwords: PasswordsDAO
 }
 
 interface UsersDAO {
@@ -46,4 +51,11 @@ interface UsersDAO {
     fun byId(id: UUID): User?
     fun update(user: User): Boolean
     fun delete(id: UUID): Boolean
+}
+
+interface PasswordsDAO {
+    fun create(password: Password): Boolean
+    fun update(password: Password): Boolean
+    fun byUserId(userId: UUID): Password?
+    fun delete(userId: UUID): Boolean
 }

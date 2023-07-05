@@ -8,9 +8,9 @@ private fun newID(): UUID = UUID.randomUUID()
 
 data class User(val id: UUID, val username: String)
 
-// Tagging interface for the mangling.
-interface Mangled
-
-data class UserWIP(val username: String) : Mangled {
+data class UserWIP(val username: String) {
     fun commit(): User = User(newID(), username)
 }
+
+@Suppress("ArrayInDataClass")
+data class Password(val userId: UUID, val salt: ByteArray, val hash: ByteArray)
