@@ -1,5 +1,7 @@
 package wafna.kolloid.db
 
+import java.util.HexFormat
+import java.util.UUID
 import org.testng.Assert
 import org.testng.annotations.Test
 import wafna.kolloid.UserWIP
@@ -22,10 +24,11 @@ class AppDBTest : PGContainer() {
         val dewey = UserWIP("Dewey").commit().also { db.users.create(it) }
         val louie = UserWIP("Louie").commit().also { db.users.create(it) }
 
-        db.users.fetchAll().size shouldEqual 3
+        db.users.fetchAll().size shouldEqual 4 // admin
         db.users.byId(huey.id)!! shouldEqual huey
         db.users.byId(dewey.id)!! shouldEqual dewey
         db.users.byId(louie.id)!! shouldEqual louie
+        db.users.search("y").size shouldEqual 2
 
         val password = "password"
         val hashed = hashPassword(password)
@@ -36,6 +39,17 @@ class AppDBTest : PGContainer() {
             Assert.assertTrue(verifyPassword(password, PasswordHash(it.salt, it.hash)))
         }
 
-        Assert.assertEquals(db.users.search("y").size, 2)
+        hashPassword("root").let {
+            println(HexFormat.of().formatHex(it.salt))
+            println(HexFormat.of().formatHex(it.hash))
+        }
+
+        db.users.byId(UUID.fromString("f0abd1a5-d9b9-4b15-bc35-41138dfb781d"))!!.also {
+            it.username shouldEqual "admin"
+            db.passwords.byUserId(it.id)!!.also {
+                Assert.assertTrue(verifyPassword("root", PasswordHash(it.salt, it.hash)))
+            }
+        }
+
     }
 }

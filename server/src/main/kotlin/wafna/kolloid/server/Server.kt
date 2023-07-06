@@ -68,7 +68,9 @@ fun main(args: Array<String>): Unit = runBlocking {
         log.info { "Serving static directory: ${it.canonicalPath}" }
     }
 
-    val dbConfig = appConfig.database
+    val dbConfig = appConfig.database.also {
+        log.info { "Connecting to ${it.jdbcUrl}" }
+    }
 
     withAppDB(dbConfig) { appDB ->
         // Populate the database with some demo data for the UI.
