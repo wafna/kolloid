@@ -10,7 +10,7 @@ class PasswordTest {
         require(8 <= length && length <= 64)
         return buildString {
             ByteArray(length) { 0 }.also { SecureRandom().nextBytes(it) }
-                .forEach { append(it.toChar()) }
+                .forEach { append(it.toInt().toChar()) }
         }
     }
 

@@ -21,3 +21,14 @@ INSERT INTO passwords (user_id, salt, hash)
 VALUES ('f0abd1a5-d9b9-4b15-bc35-41138dfb781d',
         '\xe5729eef3273370bbe6f11a1e9a968b28b2d43c15431498bc37dbf4b94f974c2aa1472fbddd06165e56e259a32b62aa7a1db6549fcb1ba9bb373ed3869ccfde3'::BYTEA,
         '\x970ab1bdeca7c16ceec7e1c0d2de13b13fd6034e28910210f8e0b6d588e4dd33'::BYTEA);
+
+CREATE TABLE todos
+(
+    id           UUID PRIMARY KEY,
+    owner        UUID        NOT NULL,
+    title        VARCHAR(64) NOT NULL,
+    description  VARCHAR(256),
+    created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    due_date     TIMESTAMP,
+    FOREIGN KEY (owner) REFERENCES users (id)
+);

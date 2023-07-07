@@ -12,7 +12,7 @@ import org.ktorm.dsl.update
 import org.ktorm.dsl.where
 import wafna.kolloid.User
 import wafna.kolloid.db.UsersDAO
-import wafna.kolloid.db.UsersTable
+import wafna.kolloid.db.schema.UsersTable
 import wafna.kolloid.db.unique
 import java.util.UUID
 import org.ktorm.dsl.like

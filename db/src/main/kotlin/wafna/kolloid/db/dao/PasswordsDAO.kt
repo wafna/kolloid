@@ -11,7 +11,7 @@ import org.ktorm.dsl.update
 import org.ktorm.dsl.where
 import wafna.kolloid.db.UserPasswordHash
 import wafna.kolloid.db.PasswordsDAO
-import wafna.kolloid.db.PasswordsTable
+import wafna.kolloid.db.schema.PasswordsTable
 import java.util.UUID
 
 private fun Query.marshal(): List<UserPasswordHash> = map { row ->
