@@ -22,5 +22,8 @@ fun hashPassword(password: String): PasswordHash {
 fun verifyPassword(given: String, stored: PasswordHash): Boolean {
     val hash = messageDigest()
         .digest(given.toByteArray(Charsets.UTF_8) + stored.salt)
-    return hash.contentEquals(stored.hash)
+    // Constant time comparison.
+    return hash.withIndex().fold(true) { v, h ->
+        stored.hash[h.index] == h.value && v
+    }
 }
