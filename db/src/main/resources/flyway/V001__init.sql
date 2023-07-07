@@ -6,9 +6,6 @@ CREATE TABLE users
     username VARCHAR(64) NOT NULL UNIQUE
 );
 
-INSERT INTO users (id, username)
-VALUES ('f0abd1a5-d9b9-4b15-bc35-41138dfb781d', 'admin');
-
 CREATE TABLE passwords
 (
     user_id UUID  NOT NULL UNIQUE,
@@ -17,7 +14,10 @@ CREATE TABLE passwords
     hash    BYTEA NOT NULL
 );
 
+INSERT INTO users (id, username)
+VALUES ('f0abd1a5-d9b9-4b15-bc35-41138dfb781d', 'admin');
+
 INSERT INTO passwords (user_id, salt, hash)
 VALUES ('f0abd1a5-d9b9-4b15-bc35-41138dfb781d',
-        '\x7b23b5d86bb4d3d96b3385121658c617f93f8f150f2d65c67ba20d0e7e2569643ee39724abb3325d630d9d268e069ec8003b24f9c3e180a421dc094b41dc9903'::BYTEA,
-        '\x813aaa844b1ed9987434f03e782bd5a5884a05e220a128aa055f2f4ff445bceb'::BYTEA);
+        '\xe5729eef3273370bbe6f11a1e9a968b28b2d43c15431498bc37dbf4b94f974c2aa1472fbddd06165e56e259a32b62aa7a1db6549fcb1ba9bb373ed3869ccfde3'::BYTEA,
+        '\x970ab1bdeca7c16ceec7e1c0d2de13b13fd6034e28910210f8e0b6d588e4dd33'::BYTEA);

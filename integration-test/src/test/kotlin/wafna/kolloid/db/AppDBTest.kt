@@ -39,10 +39,11 @@ class AppDBTest : PGContainer() {
             Assert.assertTrue(verifyPassword(password, PasswordHash(it.salt, it.hash)))
         }
 
-        hashPassword("root").let {
-            println(HexFormat.of().formatHex(it.salt))
-            println(HexFormat.of().formatHex(it.hash))
-        }
+        // For pasting into the user bootstrap DDL.
+//        hashPassword("root").let {
+//            println(HexFormat.of().formatHex(it.salt))
+//            println(HexFormat.of().formatHex(it.hash))
+//        }
 
         db.users.byId(UUID.fromString("f0abd1a5-d9b9-4b15-bc35-41138dfb781d"))!!.also {
             it.username shouldEqual "admin"
