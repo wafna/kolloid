@@ -9,6 +9,9 @@ import wafna.kolloid.db.dao.createPasswordsDAO
 import wafna.kolloid.db.dao.createUsersDAO
 import java.util.UUID
 import javax.sql.DataSource
+import wafna.kolloid.Todo
+import wafna.kolloid.TodoWIP
+import wafna.kolloid.db.dao.createTodosDAO
 
 // Internal domain object.
 @Suppress("ArrayInDataClass")
@@ -33,6 +36,7 @@ fun createAppDB(dataSource: DataSource): AppDB {
         object : AppDB {
             override val users: UsersDAO = createUsersDAO()
             override val passwords: PasswordsDAO = createPasswordsDAO()
+            override val todos: TodosDAO = createTodosDAO()
         }
     }
 }
@@ -46,6 +50,7 @@ fun withAppDB(config: DatabaseConfig, borrow: (AppDB) -> Unit) {
 interface AppDB {
     val users: UsersDAO
     val passwords: PasswordsDAO
+    val todos: TodosDAO
 }
 
 interface UsersDAO {
@@ -62,4 +67,12 @@ interface PasswordsDAO {
     fun update(password: UserPasswordHash): Boolean
     fun byUserId(userId: UUID): UserPasswordHash?
     fun delete(userId: UUID): Boolean
+}
+
+interface TodosDAO {
+    fun create(todo: Todo): Boolean
+    fun byOwner(ownerId: UUID): List<Todo>
+    fun search(ownerId: UUID, token: String): List<Todo>
+    fun update(todo: Todo): Boolean
+    fun delete(id: UUID): Boolean
 }
